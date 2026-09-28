@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Agent Skill 架构与生产级实战全书 - 艺杯羹</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="AI Agent Skill 架构与生产级实战全书：专治 Vibe Coding 时代的工程失控，开源 6 大生产级护栏与 Meta-Prompt 模具。">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <style>
+    :root {
+      --theme-color: #0284c7;
+      --text-color: #1e293b;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    .sidebar {
+      background-color: #f8fafc;
+      border-right: 1px solid #e2e8f0;
+    }
+    .sidebar-nav li > a {
+      font-size: 14px;
+      color: #475569;
+    }
+    .sidebar-nav li > a:hover {
+      color: #0284c7;
+    }
+    .markdown-section h1, .markdown-section h2, .markdown-section h3 {
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .markdown-section blockquote {
+      border-left: 4px solid #0284c7;
+      background: #f0f9ff;
+      border-radius: 4px;
+      padding: 12px 18px;
+    }
+    .markdown-section pre {
+      border-radius: 8px;
+      background-color: #0f172a;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">正在加载全书内容...</div>
+  <script>
+    window.$docsify = {
+      name: 'Agent Skill 全书',
+      repo: 'https://github.com/yibeigen/AI-Agent-Skill-Handbook',
+      loadSidebar: true,
+      subMaxLevel: 3,
+      auto2top: true,
+      search: {
+        maxAge: 86400000,
+        paths: 'auto',
+        placeholder: '搜索全书章节与核心词...',
+        noData: '未找到相关内容',
+        depth: 4
+      },
+      copyCode: {
+        buttonText: '复制代码',
+        errorText: '错误',
+        successText: '已复制'
+      }
+    }
+  </script>
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <!-- Search Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <!-- Copy Code Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <!-- Zoom Image Plugin -->
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+</body>
+</html>
