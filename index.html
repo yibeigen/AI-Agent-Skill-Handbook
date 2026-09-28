@@ -7,182 +7,290 @@
   <meta name="description" content="AI Agent Skill 架构与生产级实战全书：专治 Vibe Coding 时代的工程失控，开源 6 大生产级护栏与 Meta-Prompt 模具。">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   
-  <!-- Theme CSS -->
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Modern Themes -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
   
   <style>
     :root {
-      --theme-color: #0284c7;
-      --text-color: #334155;
-      --heading-color: #0f172a;
+      --primary: #0284c7;
+      --primary-light: #e0f2fe;
+      --primary-dark: #0369a1;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --bg-sidebar: #f8fafc;
+      --bg-card: #ffffff;
+    }
+    
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      font-size: 16px;
-      line-height: 1.85;
-      color: var(--text-color);
-      letter-spacing: 0.01em;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-size: 15.5px;
+      line-height: 1.8;
+      color: var(--text-main);
       background-color: #ffffff;
+      margin: 0;
     }
     
-    /* Center and constrain article width */
+    /* =========================================
+       1. VITEPRESS-STYLE MODERN SIDEBAR (极致现代化左侧栏)
+       ========================================= */
+    .sidebar {
+      background-color: var(--bg-sidebar) !important;
+      border-right: 1px solid var(--border-color) !important;
+      width: 290px !important;
+      padding: 0 !important;
+    }
+    
+    /* Top Logo & Brand in Sidebar */
+    .sidebar > h1 {
+      margin: 0 !important;
+      padding: 20px 22px 14px !important;
+      font-size: 1.05rem !important;
+      font-weight: 700 !important;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+    }
+    .sidebar > h1 a {
+      color: #0f172a !important;
+      text-decoration: none !important;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    
+    /* Modern Search Input (VitePress / Algolia style) */
+    .search {
+      padding: 14px 18px !important;
+      margin: 0 !important;
+      border-bottom: 1px solid var(--border-color) !important;
+      background: #ffffff;
+    }
+    .search input {
+      width: 100% !important;
+      height: 38px !important;
+      background: #f1f5f9 !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 8px !important;
+      padding: 0 14px 0 34px !important;
+      font-size: 13.5px !important;
+      color: var(--text-main) !important;
+      transition: all 0.2s ease !important;
+    }
+    .search input:focus {
+      background: #ffffff !important;
+      border-color: var(--primary) !important;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15) !important;
+      outline: none !important;
+    }
+    .search::before {
+      content: "🔍";
+      position: absolute;
+      left: 30px;
+      top: 24px;
+      font-size: 12px;
+      opacity: 0.5;
+    }
+    
+    /* Sidebar Navigation Links (Capsule Menu, NO BULLET POINTS) */
+    .sidebar-nav {
+      padding: 16px 14px 40px !important;
+    }
+    .sidebar-nav ul {
+      margin: 0 !important;
+      padding: 0 !important;
+      list-style: none !important;
+    }
+    .sidebar-nav li {
+      list-style: none !important;
+      margin: 3px 0 !important;
+    }
+    
+    /* Group Titles (e.g. 导论篇、方法篇、实战篇) */
+    .sidebar-nav > ul > li > p,
+    .sidebar-nav > ul > li > strong {
+      display: block;
+      font-size: 11.5px !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.08em !important;
+      color: var(--text-muted) !important;
+      padding: 14px 12px 6px !important;
+      margin: 6px 0 2px !important;
+    }
+    
+    /* Navigation Items (VitePress Rounded Pill Style) */
+    .sidebar-nav a {
+      display: block !important;
+      padding: 8px 12px !important;
+      border-radius: 7px !important;
+      font-size: 13.5px !important;
+      font-weight: 500 !important;
+      color: #475569 !important;
+      text-decoration: none !important;
+      line-height: 1.5 !important;
+      transition: all 0.15s ease-in-out !important;
+    }
+    .sidebar-nav a:hover {
+      background-color: #f1f5f9 !important;
+      color: var(--primary) !important;
+      text-decoration: none !important;
+      transform: translateX(2px);
+    }
+    
+    /* Active Link in Sidebar */
+    .sidebar-nav li.active > a {
+      background-color: var(--primary-light) !important;
+      color: var(--primary) !important;
+      font-weight: 600 !important;
+      border-right: none !important;
+      position: relative;
+    }
+    .sidebar-nav li.active > a::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 6px;
+      bottom: 6px;
+      width: 3px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* =========================================
+       2. MODERN CONTENT & TYPOGRAPHY (现代宽屏出版级阅读排版)
+       ========================================= */
     .content {
-      padding-top: 20px;
-    }
-    .markdown-section {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 30px 40px 80px;
+      left: 290px !important;
+      padding-top: 10px !important;
     }
     
-    /* Typography */
+    .markdown-section {
+      max-width: 860px !important;
+      margin: 0 auto !important;
+      padding: 40px 48px 100px !important;
+    }
+    
+    /* Clean Headings */
     .markdown-section h1 {
-      font-size: 2.1rem;
-      font-weight: 800;
-      color: var(--heading-color);
-      margin-top: 1.5rem;
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.6rem;
-      border-bottom: 1px solid #e2e8f0;
+      font-size: 2.2rem !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.02em !important;
+      color: #0f172a !important;
+      margin: 1.8rem 0 1.5rem !important;
+      padding-bottom: 0.8rem !important;
+      border-bottom: 1px solid var(--border-color) !important;
     }
     .markdown-section h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--heading-color);
-      margin-top: 2.2rem;
-      margin-bottom: 1rem;
+      font-size: 1.55rem !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em !important;
+      color: #0f172a !important;
+      margin: 2.6rem 0 1rem !important;
     }
     .markdown-section h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--heading-color);
-      margin-top: 1.8rem;
-      margin-bottom: 0.8rem;
+      font-size: 1.25rem !important;
+      font-weight: 600 !important;
+      color: #0f172a !important;
+      margin: 2rem 0 0.8rem !important;
     }
     .markdown-section p {
-      margin: 1.1rem 0;
-      line-height: 1.85;
+      margin: 1.2rem 0 !important;
+      color: #334155 !important;
     }
     
-    /* Enhanced Blockquotes */
+    /* Code Blocks (Mac Style) */
+    .markdown-section pre {
+      border-radius: 10px !important;
+      background-color: #0f172a !important;
+      padding: 16px 20px !important;
+      margin: 24px 0 !important;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+      border: 1px solid #1e293b !important;
+      position: relative;
+    }
+    .markdown-section code {
+      font-family: 'JetBrains Mono', Consolas, Monaco, monospace !important;
+      font-size: 13.5px !important;
+    }
+    .markdown-section p code, .markdown-section li code {
+      background: #f1f5f9 !important;
+      color: #0284c7 !important;
+      padding: 2px 6px !important;
+      border-radius: 4px !important;
+      font-size: 13px !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+    
+    /* Enhanced Quotes */
     .markdown-section blockquote {
-      border-left: 4px solid #0284c7;
-      background: #f0f9ff;
-      border-radius: 0 8px 8px 0;
-      padding: 14px 20px;
-      margin: 20px 0;
-      color: #0369a1;
-    }
-    .markdown-section blockquote p {
-      margin: 0;
-      line-height: 1.7;
+      border-left: 4px solid var(--primary) !important;
+      background: #f0f9ff !important;
+      border-radius: 0 10px 10px 0 !important;
+      padding: 14px 20px !important;
+      margin: 24px 0 !important;
+      color: #0369a1 !important;
+      font-size: 14.5px !important;
     }
     
-    /* Images styling */
-    .markdown-section img {
-      border-radius: 8px;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-      margin: 24px auto;
-      display: block;
-      max-width: 100%;
-    }
-    
-    /* Tables styling */
-    .markdown-section table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 24px 0;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid #e2e8f0;
-    }
-    .markdown-section table th {
-      background-color: #f8fafc;
-      color: #0f172a;
-      font-weight: 600;
-      border: 1px solid #e2e8f0;
-      padding: 10px 16px;
-    }
-    .markdown-section table td {
-      border: 1px solid #e2e8f0;
-      padding: 10px 16px;
-    }
-    
-    /* Clean Card Tables (for QR codes and author cards) */
+    /* Modern Author & Support Cards */
     .markdown-section table.author-card,
     .markdown-section table.author-card tr,
-    .markdown-section table.author-card td,
-    .markdown-section table.author-card th {
+    .markdown-section table.author-card td {
       border: none !important;
       background: transparent !important;
       box-shadow: none !important;
-      padding: 8px 24px !important;
+      padding: 10px 20px !important;
     }
     .markdown-section table.author-card img {
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
-      border: 1px solid #e2e8f0;
+      border-radius: 10px !important;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+      border: 1px solid var(--border-color) !important;
+      transition: transform 0.2s ease;
+    }
+    .markdown-section table.author-card img:hover {
+      transform: translateY(-2px);
     }
     
-    /* Code Blocks */
-    .markdown-section pre {
-      border-radius: 8px;
-      margin: 20px 0;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* General Images */
+    .markdown-section img {
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      margin: 28px auto;
+      max-width: 100%;
     }
     
-    /* Sidebar */
-    .sidebar {
-      background-color: #f8fafc;
-      border-right: 1px solid #e2e8f0;
+    /* Copy Code Button */
+    .docsify-copy-code-button {
+      background: #1e293b !important;
+      color: #94a3b8 !important;
+      border-radius: 5px !important;
+      font-size: 12px !important;
+      padding: 4px 8px !important;
     }
-    .sidebar > h1 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin: 1.5rem 1rem 1rem;
-    }
-    .sidebar-nav ul {
-      padding-left: 1.2rem;
-    }
-    .sidebar-nav li {
-      margin: 6px 0;
-    }
-    .sidebar-nav li > a {
-      font-size: 14px;
-      color: #475569;
-      transition: all 0.2s ease;
-    }
-    .sidebar-nav li > a:hover {
-      color: #0284c7;
-      text-decoration: none;
-    }
-    .sidebar-nav li.active > a {
-      color: #0284c7;
-      font-weight: 600;
-    }
-    
-    /* Search Box */
-    .search {
-      padding: 12px 16px;
-      border-bottom: 1px solid #e2e8f0;
-    }
-    .search input {
-      border-radius: 20px;
-      border: 1px solid #cbd5e1;
-      padding: 6px 14px;
-      font-size: 13px;
-    }
-    .search input:focus {
-      border-color: #0284c7;
+    .docsify-copy-code-button:hover {
+      background: var(--primary) !important;
+      color: #ffffff !important;
     }
   </style>
 </head>
 <body>
-  <div id="app">正在加载《AI Agent Skill 全书》...</div>
+  <div id="app">正在以现代架构加载《AI Agent Skill 全书》...</div>
   <script>
     window.$docsify = {
-      name: '📖 Agent Skill 全书',
+      name: '📖 Agent Skill 实战全书',
       repo: 'https://github.com/yibeigen/AI-Agent-Skill-Handbook',
       loadSidebar: true,
       subMaxLevel: 3,
@@ -190,27 +298,30 @@
       search: {
         maxAge: 86400000,
         paths: 'auto',
-        placeholder: '搜索全书章节与核心词...',
-        noData: '未找到相关内容',
+        placeholder: '搜索全书章节、关键词 (Ctrl + K)...',
+        noData: '未找到相关章节内容',
         depth: 4
       },
       copyCode: {
-        buttonText: '复制代码',
+        buttonText: '复制',
         errorText: '错误',
         successText: '已复制'
       }
     }
   </script>
-  <!-- Docsify v4 -->
+  <!-- Docsify v4 Core -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <!-- Plugins -->
+  <!-- Search Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <!-- Copy Code Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+  <!-- Zoom Image Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
   <!-- Syntax Highlighting -->
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
 </body>
 </html>
