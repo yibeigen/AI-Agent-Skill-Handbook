@@ -6,47 +6,183 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="AI Agent Skill 架构与生产级实战全书：专治 Vibe Coding 时代的工程失控，开源 6 大生产级护栏与 Meta-Prompt 模具。">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  
+  <!-- Theme CSS -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+  
   <style>
     :root {
       --theme-color: #0284c7;
-      --text-color: #1e293b;
+      --text-color: #334155;
+      --heading-color: #0f172a;
     }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--text-color);
+      letter-spacing: 0.01em;
+      background-color: #ffffff;
     }
+    
+    /* Center and constrain article width */
+    .content {
+      padding-top: 20px;
+    }
+    .markdown-section {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 30px 40px 80px;
+    }
+    
+    /* Typography */
+    .markdown-section h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--heading-color);
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .markdown-section h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--heading-color);
+      margin-top: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    .markdown-section h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--heading-color);
+      margin-top: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+    .markdown-section p {
+      margin: 1.1rem 0;
+      line-height: 1.85;
+    }
+    
+    /* Enhanced Blockquotes */
+    .markdown-section blockquote {
+      border-left: 4px solid #0284c7;
+      background: #f0f9ff;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 20px;
+      margin: 20px 0;
+      color: #0369a1;
+    }
+    .markdown-section blockquote p {
+      margin: 0;
+      line-height: 1.7;
+    }
+    
+    /* Images styling */
+    .markdown-section img {
+      border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+      margin: 24px auto;
+      display: block;
+      max-width: 100%;
+    }
+    
+    /* Tables styling */
+    .markdown-section table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .markdown-section table th {
+      background-color: #f8fafc;
+      color: #0f172a;
+      font-weight: 600;
+      border: 1px solid #e2e8f0;
+      padding: 10px 16px;
+    }
+    .markdown-section table td {
+      border: 1px solid #e2e8f0;
+      padding: 10px 16px;
+    }
+    
+    /* Clean Card Tables (for QR codes and author cards) */
+    .markdown-section table.author-card,
+    .markdown-section table.author-card tr,
+    .markdown-section table.author-card td,
+    .markdown-section table.author-card th {
+      border: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      padding: 8px 24px !important;
+    }
+    .markdown-section table.author-card img {
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1) !important;
+      border: 1px solid #e2e8f0;
+    }
+    
+    /* Code Blocks */
+    .markdown-section pre {
+      border-radius: 8px;
+      margin: 20px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Sidebar */
     .sidebar {
       background-color: #f8fafc;
       border-right: 1px solid #e2e8f0;
     }
+    .sidebar > h1 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 1.5rem 1rem 1rem;
+    }
+    .sidebar-nav ul {
+      padding-left: 1.2rem;
+    }
+    .sidebar-nav li {
+      margin: 6px 0;
+    }
     .sidebar-nav li > a {
       font-size: 14px;
       color: #475569;
+      transition: all 0.2s ease;
     }
     .sidebar-nav li > a:hover {
       color: #0284c7;
+      text-decoration: none;
     }
-    .markdown-section h1, .markdown-section h2, .markdown-section h3 {
-      font-weight: 700;
-      color: #0f172a;
+    .sidebar-nav li.active > a {
+      color: #0284c7;
+      font-weight: 600;
     }
-    .markdown-section blockquote {
-      border-left: 4px solid #0284c7;
-      background: #f0f9ff;
-      border-radius: 4px;
-      padding: 12px 18px;
+    
+    /* Search Box */
+    .search {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e2e8f0;
     }
-    .markdown-section pre {
-      border-radius: 8px;
-      background-color: #0f172a;
+    .search input {
+      border-radius: 20px;
+      border: 1px solid #cbd5e1;
+      padding: 6px 14px;
+      font-size: 13px;
+    }
+    .search input:focus {
+      border-color: #0284c7;
     }
   </style>
 </head>
 <body>
-  <div id="app">正在加载全书内容...</div>
+  <div id="app">正在加载《AI Agent Skill 全书》...</div>
   <script>
     window.$docsify = {
-      name: 'Agent Skill 全书',
+      name: '📖 Agent Skill 全书',
       repo: 'https://github.com/yibeigen/AI-Agent-Skill-Handbook',
       loadSidebar: true,
       subMaxLevel: 3,
@@ -67,11 +203,14 @@
   </script>
   <!-- Docsify v4 -->
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <!-- Search Plugin -->
+  <!-- Plugins -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <!-- Copy Code Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <!-- Zoom Image Plugin -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  <!-- Syntax Highlighting -->
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
 </body>
 </html>

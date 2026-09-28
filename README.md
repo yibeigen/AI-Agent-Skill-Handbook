@@ -76,15 +76,15 @@
 如果你在阅读本书、开发自己的专属 Skill 或在团队中落地 AI 编程规范时遇到任何疑问，欢迎交流：
 
 <div align="center">
-<table>
+<table class="author-card">
 <tr>
 <td align="center" width="50%">
-<img src="doc/公众号.png" width="220" alt="微信公众号：艺杯羹"/><br/>
+<img src="doc/wechat.png" width="200" alt="微信公众号：艺杯羹"/><br/>
 <b>关注微信公众号【艺杯羹】</b><br/>
 <sub>第一时间获取深度技术思考、开源更新与内测福利</sub>
 </td>
 <td align="center" width="50%">
-<img src="doc/赞赏码-20260804155844-hbvmvkm.jpg" width="220" alt="赞赏支持"/><br/>
+<img src="doc/sponsor.jpg" width="200" alt="赞赏支持"/><br/>
 <b>请作者喝杯咖啡</b><br/>
 <sub>如果本书或开源 Skill 对你有所启发，感谢你的赞赏鼓励</sub>
 </td>
