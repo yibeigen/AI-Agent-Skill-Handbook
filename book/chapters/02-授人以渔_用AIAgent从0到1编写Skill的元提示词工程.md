@@ -182,7 +182,7 @@ description: "API 审计专家。监控接口耗时，强制异常捕获边界�
 <table class="author-card" align="center">
 <tr>
 <td align="center">
-<img src="images/wechat.png" width="160" alt="微信公众号：艺杯羹"/><br/>
+<img src="images/wechat.jpg" width="160" alt="微信公众号：艺杯羹"/><br/>
 <b>关注微信公众号【艺杯羹】</b><br/>
 <sub>第一时间获取深度技术思考与开源更新</sub>
 </td>

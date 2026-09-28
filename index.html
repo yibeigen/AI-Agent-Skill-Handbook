@@ -306,7 +306,22 @@
         buttonText: '复制',
         errorText: '错误',
         successText: '已复制'
-      }
+      },
+      plugins: [
+        function(hook, vm) {
+          hook.doneEach(function() {
+            document.querySelectorAll('.markdown-section img').forEach(function(img) {
+              img.addEventListener('error', function() {
+                if (!this.getAttribute('data-healed')) {
+                  this.setAttribute('data-healed', '1');
+                  var filename = this.getAttribute('src').split('/').pop();
+                  this.src = 'images/' + filename;
+                }
+              });
+            });
+          });
+        }
+      ]
     }
   </script>
   <!-- Docsify v4 Core -->
